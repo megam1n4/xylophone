@@ -6,22 +6,51 @@ void main() {
 }
 
 class Xylophone extends StatelessWidget {
-  const Xylophone({Key? key}) : super(key: key);
+  void playSound(int noteNumber) {
+    final player = AudioPlayer();
+    player.play(
+      AssetSource('note$noteNumber.wav'),
+    );
+  }
+
+  Expanded buildKey({required Color color, required int noteNumber}) {
+    return Expanded(
+      child: FlatButton(
+        color: color,
+        onPressed: () {
+          playSound(noteNumber);
+        },
+        child: Text(''),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: FlatButton(
-            onPressed: () {
-              final player = AudioCache();
-              player.play('note1.wav');
-              print('tapped');
-            },
-            child: const Text('Button1'),
-          ),
-        ),
+        backgroundColor: Colors.black38,
+        body: SafeArea(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: 2),
+            buildKey(color: Colors.red, noteNumber: 1),
+            SizedBox(height: 2),
+            buildKey(color: Colors.orange, noteNumber: 2),
+            SizedBox(height: 2),
+            buildKey(color: Colors.green, noteNumber: 3),
+            SizedBox(height: 2),
+            buildKey(color: Colors.yellow, noteNumber: 4),
+            SizedBox(height: 2),
+            buildKey(color: Colors.blue, noteNumber: 5),
+            SizedBox(height: 2),
+            buildKey(color: Colors.teal, noteNumber: 6),
+            SizedBox(height: 2),
+            buildKey(color: Colors.purple, noteNumber: 7),
+            SizedBox(height: 2)
+          ],
+        )),
       ),
     );
   }
